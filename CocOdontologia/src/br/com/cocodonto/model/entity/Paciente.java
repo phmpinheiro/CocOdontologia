@@ -13,9 +13,10 @@ public class Paciente {
 	private String NAME;
 	private String RG;
 	private String CPF;
-	private Contato CONTACT;		
+	private Contato CONTACT;	
 	private Endereco ADDRES;
-	private SexoType SEX;	
+	private SexoType SEX;
+	
 	//
 	public Paciente(long iD, String nAME, String rG, String cPF, Contato cONTACT, Endereco aDDRES, SexoType sEX) {
 		super();

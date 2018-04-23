@@ -3,29 +3,41 @@ package br.com.cocodonto.data;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import br.com.cocodonto.framework.daoHelper;
 import br.com.cocodonto.model.entity.Paciente;
 
 
 public class PacienteDao {
 	
 	public static void main(String[] args){
-		inserir();
+		//inserir();
 	}
 	
     
-    public static void inserir() {
+    public void inserir(Paciente pPaciente) {
     	
-    	System.out.println("teste");
+    	daoHelper objConexao = new daoHelper();    	
+    	Connection conn = null;
+    	Statement st = null;	
     	
-		try {
-			objConexao objConexao = new objConexao();
-	    	Connection conn = objConexao.iniciarConexaoOracle();
-	    	Statement st = conn.createStatement();
-	    	st.executeUpdate("INSERT INTO PACIENTE (ID, NOME, RG, CPF, EMAIL, TELEFONE, CELULAR) VALUES (1,'PEDRO','4103066','00476568919','PEDRO.PINHEIRO@SENIOR.COM.BR','996413088','996413088') ");
-		} catch (ClassNotFoundException e) {			
-			e.printStackTrace();
+		try 
+		{   			
+			conn = objConexao.getConnection();
+			st =  conn.createStatement();			
+			
+			st.executeUpdate("INSERT INTO PACIENTE (ID, NOME, RG, CPF, SEXO) VALUES " +
+							 "(' " + 3 + "','"
+						      + pPaciente.getNAME()   + "','"
+			                  + pPaciente.getRG()   + "','"
+			                  + pPaciente.getCPF()  + "','"
+			                  + pPaciente.getSEX()
+			                  + "')");
+	    	                 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}	
+		} finally {			
+			objConexao.releaseAll(conn, st);
+		}		
     }
 }
