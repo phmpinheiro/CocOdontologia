@@ -1,6 +1,7 @@
 package br.com.cocodonto.data;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -19,23 +20,22 @@ public class PacienteDao {
     	
     	daoHelper objConexao = new daoHelper();    	
     	Connection conn = null;
-    	Statement st = null;	
+    	PreparedStatement st = null;	
     	
 		try 
 		{   			
 			conn = objConexao.getConnection();
-			st =  conn.createStatement();			
-			
-			st.executeUpdate("INSERT INTO PACIENTE (ID, NOME, RG, CPF, SEXO) VALUES " +
-							 "(' " + 3 + "','"
-						      + pPaciente.getNAME()   + "','"
-			                  + pPaciente.getRG()   + "','"
-			                  + pPaciente.getCPF()  + "','"
-			                  + pPaciente.getSEX()
-			                  + "')");
+			int index = 0;
+			st =  conn.prepareStatement("INSERT INTO PACIENTE (ID, NOME, RG, CPF, SEXO) VALUES (?,?,?,?,?)");
+			st.setInt(++ index, (int) pPaciente.getID());
+			st.setString(++ index, pPaciente.getNAME());
+			st.setString(++ index, pPaciente.getRG());
+			st.setString(++ index, pPaciente.getCPF());
+			st.setString(++ index, pPaciente.getSEX().toString());
+			st.executeUpdate();
 	    	                 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new CreateDaoException("Não foi possível realizar le INSERT", e);
 		} finally {			
 			objConexao.releaseAll(conn, st);
 		}		

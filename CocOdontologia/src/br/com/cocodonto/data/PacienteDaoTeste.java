@@ -8,7 +8,7 @@ public class PacienteDaoTeste {
 
 	public static void main(String[] args) {
 		
-		Paciente paciente = new Paciente("Zé Colmeia","123123","321321",SexoType.M);
+		Paciente paciente = new Paciente(15,"Zé Colmeia","123123","321321",SexoType.M);
 		PacienteDao pacienteDao = new PacienteDao();
 		
 		pacienteDao.inserir(paciente);
