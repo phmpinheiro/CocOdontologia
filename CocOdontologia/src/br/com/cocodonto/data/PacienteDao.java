@@ -13,8 +13,7 @@ public class PacienteDao {
 	
 	public static void main(String[] args){
 		//inserir();
-	}
-	
+	}	
     
     public void inserir(Paciente pPaciente) {
     	
