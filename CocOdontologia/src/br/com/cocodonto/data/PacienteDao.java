@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import br.com.cocodonto.framework.daoHelper;
+import br.com.cocodonto.framework.DaoHelper;
 import br.com.cocodonto.model.entity.Paciente;
 
 
@@ -17,7 +17,7 @@ public class PacienteDao {
     
     public void inserir(Paciente pPaciente) {
     	
-    	daoHelper objConexao = new daoHelper();    	
+    	DaoHelper objConexao = new DaoHelper();    	
     	Connection conn = null;
     	PreparedStatement st = null;	
     	

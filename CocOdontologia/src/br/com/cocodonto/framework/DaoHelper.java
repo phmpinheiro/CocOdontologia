@@ -2,11 +2,46 @@ package br.com.cocodonto.framework;
 
 import java.sql.*;
 
-public class daoHelper {
+public class DaoHelper {
 		
 	final String urlSenior = "jdbc:oracle:thin:@localhost:1521:XE";
 	
+	private static final ThreadLocal<Connection> context = new ThreadLocal<Connection>();
+	
+	public void beginTransaction() throws SQLException{		
+		Connection conn = getConnection();
+		conn.setAutoCommit(false);
+		context.set(conn);		
+	}
+	
+	public void endTransaction() throws SQLException {
+		
+		commit(getConnectionFromContext());
+		releaseTransaction();
+		
+	}
+	
+	public Connection getConnectionFromContext() throws SQLException{
+		
+		if (context.get() == null) throw new SQLException("Transação inválida");		
+		if (context.get().isClosed()) throw new SQLException("Transação fechada");
+		return context.get();
+	}
+
+	public void commit(Connection conn) throws SQLException {		
+		conn.commit();		
+	}
+
+	public void releaseTransaction() throws SQLException{
+
+		Connection conn = getConnectionFromContext();
+		release(conn);
+		context.remove();
+		
+	}
+	
 	public Connection getConnection() throws SQLException {
+
 		Connection conn = null;
 		
 		//Load no drive
